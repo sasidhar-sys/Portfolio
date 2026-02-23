@@ -1,0 +1,2090 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Sasidhar Portfolio</title>
+  <link rel="icon" type="image/png" href="favicon2.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #000;
+      --bg-card: #111;
+      --border-color: #222;
+      --text-primary: #f5f5f5;
+      --text-secondary: #a1a1a1;
+      --accent: #FFCC00;
+      --accent-2: #FFD700;
+      --glass: rgba(255, 204, 0, 0.06);
+      --radius: 12px;
+
+      /* Renamed for consistency */
+      --accent-color: var(--accent);
+      --card-color: var(--bg-card);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      font-family: "Inter", sans-serif;
+      background-color: var(--bg);
+      color: var(--text-primary);
+      overflow-x: hidden;
+    }
+
+    /* General Container from Blue Site */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 4rem 1rem;
+    }
+
+    /* Headings */
+    h1,
+    h2,
+    h3 {
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+
+    h1 {
+      font-size: 3rem;
+    }
+
+    h2 {
+      font-size: 2.2rem;
+      color: var(--text-primary);
+      margin-bottom: 2rem;
+    }
+
+    h3 {
+      font-size: 1.2rem;
+      color: var(--text-primary);
+    }
+
+    p {
+      margin-bottom: 1rem;
+      color: var(--text-secondary);
+    }
+
+    /* ========================================
+    == 2. HEADER / NAVIGATION (patched for centered nav & transparent header) ===
+    ========================================
+    */
+    /* Header: centered nav, fully transparent (no blur/translucent strip) */
+    header {
+      display: flex;
+      justify-content: center;
+      /* KEEP NAV CENTERED */
+      align-items: center;
+      padding: 20px 60px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: transparent !important;
+      /* fully transparent */
+      backdrop-filter: none !important;
+      /* remove blur so it's not translucent */
+      border-bottom: none !important;
+      /* remove bottom border */
+      z-index: 1000;
+      pointer-events: auto;
+    }
+
+    /* Profile pic positioned on the left, vertically centered within header */
+    .profile-pic {
+      position: absolute;
+      left: 60px;
+      /* distance from left edge — adjust if needed */
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 1100;
+      /* above header content (nav) */
+    }
+
+    .profile-pic img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--accent);
+      cursor: pointer;
+      display: block;
+    }
+
+    /* nav centered (removed absolute/right positioning) */
+    nav {
+      display: flex;
+      gap: 30px;
+      margin: 0 auto;
+      align-items: center;
+      position: relative;
+      z-index: 1050;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--text-primary);
+      font-size: 17px;
+      transition: color .25s;
+      line-height: 1;
+      display: inline-block;
+      padding: 6px 4px;
+    }
+
+    nav a:hover {
+      color: var(--accent);
+    }
+
+    /* ========================================
+    == 3. HERO SECTION (from NavBar.html) ===
+    ========================================
+    */
+    .hero-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 60px;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    .text-content {
+      max-width: 500px;
+    }
+
+    .text-content h1 {
+      font-size: 36px;
+      font-weight: 800;
+      line-height: 1.4;
+      margin-bottom: 20px;
+      color: var(--text-primary);
+    }
+
+    .text-content p {
+      font-size: 15px;
+      color: var(--text-secondary);
+      margin-bottom: 30px;
+    }
+
+    .resume-btn {
+      background: #fff;
+      color: #000;
+      padding: 12px 30px;
+      font-weight: 700;
+      border: 0;
+      cursor: pointer;
+      position: relative;
+
+    }
+
+    .resume-btn::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      width: 100%;
+      height: 6px;
+      background: linear-gradient(90deg, #00ffff, #ffcc00, #ff0099, var(--accent));
+    }
+
+    .image {
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-start;
+    }
+
+    /* keep flex-start so we can push image down with margin */
+    .image img {
+      max-width: 450px;
+      border-radius: 10px;
+      margin-top: 56px;
+    }
+
+    /* moved image down visually */
+
+    /* ========================================
+    == 4. SKILLS SECTION (from Blue Site) ===
+    ========================================
+    */
+    #skills {
+      background-color: #050505;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+    }
+
+    .skill-item {
+      background-color: var(--card-color);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      text-align: center;
+      font-weight: 500;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    .skill-item:hover {
+      transform: translateY(-5px);
+      background-color: #1a1a1a;
+    }
+
+    /* ========================================
+    == 5. WORK EXPERIENCE (from Blue Site) ==
+    ========================================
+    */
+    .card {
+      background-color: var(--card-color);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 1rem;
+    }
+
+    .card-header span {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    .card ul {
+      list-style: disc;
+      margin-left: 1.2rem;
+      color: var(--text-secondary);
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .tag {
+      background-color: var(--border-color);
+      color: var(--text-secondary);
+      padding: 0.25rem 0.75rem;
+      border-radius: 99px;
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    /* ========================================
+    == 6. PROJECTS (from about.html) ========
+    ========================================
+    */
+    #projects {
+      background-color: #050505;
+    }
+
+    .projects {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+
+    .proj-card {
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.72));
+      border-radius: var(--radius);
+      padding: 18px;
+      border: 1px solid rgba(255, 204, 0, 0.08);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+      opacity: 0;
+      transform: translateY(18px);
+      transition: transform 600ms cubic-bezier(.2, .9, .2, 1), opacity 520ms ease;
+      will-change: transform, opacity;
+    }
+
+    .proj-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .proj-head {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .proj-thumb {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex: 0 0 72px;
+      border: 3px solid var(--accent);
+      display: grid;
+      place-items: center;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.06));
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
+      cursor: pointer;
+    }
+
+    .proj-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .proj-title {
+      font-size: 20px;
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .proj-sub {
+      color: var(--muted);
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    .proj-body {
+      margin-top: 12px;
+      color: #fff5cc;
+      line-height: 1.6;
+      font-size: 15px;
+    }
+
+    .tech-list {
+      margin-top: 12px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .tech {
+      font-size: 13px;
+      color: #fff;
+      background: rgba(255, 255, 255, 0.03);
+      padding: 6px 10px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.02);
+    }
+
+    .proj-cta {
+      margin-top: 14px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    /* Button style from about.html */
+    .btn {
+      background: transparent;
+      color: var(--accent);
+      border: 1px solid rgba(255, 204, 0, 0.9);
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn:hover {
+      background: rgba(255, 204, 0, 0.06);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    .progress {
+      height: 8px;
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 999px;
+      overflow: hidden;
+      margin-top: 10px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02);
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      transition: width 1200ms cubic-bezier(.2, .9, .2, 1);
+    }
+
+    .proj-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 36px 120px rgba(0, 0, 0, 0.7);
+    }
+
+    /* Project Image Modal */
+    .img-modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.88);
+      z-index: 4000;
+      padding: 28px;
+    }
+
+    .img-modal.open {
+      display: flex;
+    }
+
+    .img-card {
+      width: min(880px, 94%);
+      max-width: 1100px;
+      background: linear-gradient(180deg, rgba(18, 6, 4, 0.92), rgba(6, 2, 1, 0.98));
+      border-radius: 12px;
+      padding: 18px;
+      box-shadow: 0 50px 140px rgba(0, 0, 0, 0.85);
+      border: 1px solid rgba(255, 204, 0, 0.12);
+      transform: translateY(12px);
+      opacity: 0;
+      transition: transform 260ms cubic-bezier(.2, .9, .2, 1), opacity 260ms ease;
+    }
+
+    .img-modal.open .img-card {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .img-card .img-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #000;
+      padding: 12px;
+      border-radius: 8px;
+    }
+
+    .img-card img {
+      width: 100%;
+      height: auto;
+      max-height: 78vh;
+      object-fit: contain;
+      display: block;
+      border-radius: 8px;
+    }
+
+    .img-close {
+      position: absolute;
+      right: 20px;
+      top: 18px;
+      background: transparent;
+      border: 0;
+      color: #fff;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    /* ========================================
+    == 7. PROFICIENCY (from Blue Site) ======
+    ========================================
+    */
+    .proficiency-group {
+      margin-bottom: 2rem;
+    }
+
+    .proficiency-item {
+      margin-bottom: 1rem;
+    }
+
+    .skill-bar {
+      background-color: var(--border-color);
+      border-radius: 5px;
+      height: 8px;
+      overflow: hidden;
+    }
+
+    .skill-level {
+      height: 100%;
+      background-color: var(--accent-color);
+      /* Uses orange */
+      border-radius: 5px;
+    }
+
+    .skill-info {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+
+    .skill-info span:first-child {
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    .skill-info span:last-child {
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    /* ========================================
+    == 8. CERTIFICATES (from NavBar.html) ===
+    ========================================
+    */
+    section#certificates {
+      padding: 80px 20px;
+      max-width: 1100px;
+      margin: 0 auto 100px auto;
+      z-index: 1;
+    }
+
+    .certs-title {
+      text-align: center;
+      color: var(--accent);
+      font-size: 34px;
+      font-weight: 800;
+      margin-bottom: 40px;
+    }
+
+    .certificate {
+      background: linear-gradient(180deg, rgba(255, 204, 0, 0.04), rgba(0, 0, 0, 0.9));
+      border-radius: 14px;
+      border: 1px solid rgba(255, 204, 0, 0.25);
+      box-shadow: 0 12px 30px rgba(255, 204, 0, 0.06);
+      margin-bottom: 80px;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(48px);
+      transition: transform 900ms cubic-bezier(.2, .9, .2, 1), opacity 900ms ease;
+    }
+
+    .certificate.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .certificate-info {
+      padding: 22px 26px;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.55);
+      border-bottom: 1px solid rgba(255, 204, 0, 0.06);
+    }
+
+    .certificate-info h3 {
+      color: #fff;
+      font-size: 22px;
+      margin-bottom: 6px;
+    }
+
+    .certificate-info p {
+      color: #fff5cc;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .certificate-info span {
+      color: #ccc;
+      display: block;
+      font-size: 15px;
+      margin-bottom: 8px;
+    }
+
+    .cert-embed-wrap {
+      width: 100%;
+      height: calc(80vh);
+      max-height: 900px;
+      min-height: 420px;
+      background: #0b0b0b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .cert-fixed-img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      display: block;
+      border-radius: 8px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+      transition: transform 400ms ease;
+    }
+
+    .cert-embed-wrap:hover .cert-fixed-img {
+      transform: scale(1.01);
+    }
+
+    /* ========================================
+    == 9. CONTACT FORM (from Blue Site) =====
+    ========================================
+    */
+    #contact {
+      background-color: #050505;
+    }
+
+    #contact .container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+    }
+
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group label {
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+      color: var(--text-secondary);
+    }
+
+    .form-group input,
+    .form-group textarea {
+      background-color: var(--card-color);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 0.75rem;
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+    }
+
+    .form-group textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+
+    .contact-info ul {
+      list-style: none;
+    }
+
+    .contact-info li {
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      color: var(--text-secondary);
+    }
+
+    .contact-info li strong {
+      color: var(--text-primary);
+      display: inline-block;
+      width: 80px;
+    }
+
+    /* Use the orange button style for the contact form */
+    .contact-form .btn {
+      background-color: var(--accent-color);
+      color: #000;
+      border: 0;
+    }
+
+    .contact-form .btn:hover {
+      background-color: var(--accent-2);
+      transform: scale(1.02) translateY(-2px);
+    }
+
+    /* ========================================
+    == 10. RESPONSIVE & BACKGROUND ==========
+    ========================================
+    */
+    @media (max-width: 980px) {
+      header {
+        padding: 15px 20px;
+      }
+
+      nav {
+        display: none;
+      }
+
+      /* Hide nav on mobile */
+      .hero-container {
+        flex-direction: column;
+        padding: 100px 20px 40px;
+        gap: 24px;
+        min-height: auto;
+      }
+
+      .image {
+        order: -1;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .image img {
+        max-width: 70%;
+        margin-top: 18px;
+      }
+
+      .text-content {
+        text-align: center;
+      }
+
+      .cert-embed-wrap {
+        height: 56vh;
+        min-height: 360px;
+      }
+
+      .certs-title {
+        font-size: 28px;
+      }
+
+      #contact .container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width:480px) {
+      .cert-embed-wrap {
+        height: 46vh;
+        min-height: 300px;
+      }
+
+      .certificate-info h3 {
+        font-size: 18px;
+      }
+
+      .profile-pic {
+        left: 20px;
+      }
+    }
+
+    canvas#network-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    .floating-text {
+      position: fixed;
+      font-weight: 700;
+      color: #FFD700;
+      pointer-events: none;
+      z-index: -1;
+      opacity: 0;
+      will-change: transform, opacity;
+      animation: floatText 24s linear infinite;
+    }
+
+    @keyframes floatText {
+      0% {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
+
+      8% {
+        opacity: 0.7;
+      }
+
+      92% {
+        opacity: 0.7;
+      }
+
+      100% {
+        transform: translateY(-12vh);
+        opacity: 0;
+      }
+    }
+
+    /* Animation class for new sections */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ========================================
+    == 11. ALL MODAL STYLES ================
+    ========================================
+    */
+
+    /* Profile Pic Modal */
+    .pp-modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 2000;
+      padding: 28px;
+    }
+
+    .pp-modal.open {
+      display: flex;
+    }
+
+    .pp-card {
+      width: min(720px, 92%);
+      max-width: 920px;
+      background: linear-gradient(180deg, rgba(30, 10, 5, 0.85), rgba(8, 2, 1, 0.92));
+      border-radius: 12px;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7);
+      overflow: hidden;
+      transform: translateY(20px) scale(.98);
+      opacity: 0;
+      transition: transform 260ms ease, opacity 260ms ease;
+      border: 1px solid rgba(255, 204, 0, 0.12);
+    }
+
+    .pp-modal.open .pp-card {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+
+    .pp-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    }
+
+    .pp-header .thumb {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex: 0 0 56px;
+      border: 2px solid var(--accent);
+    }
+
+    .pp-header .thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .pp-header .meta {
+      color: #fff;
+    }
+
+    .pp-header .meta .name {
+      font-weight: 800;
+      font-size: 18px;
+      color: var(--accent);
+    }
+
+    .pp-header .meta .sub {
+      color: #fff5cc;
+      font-size: 13px;
+      margin-top: 2px;
+    }
+
+    .pp-body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      background: #000;
+    }
+
+    .pp-body img {
+      max-width: calc(100% - 40px);
+      max-height: calc(80vh - 120px);
+      object-fit: contain;
+      border-radius: 8px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+    }
+
+    .pp-close {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      background: transparent;
+      border: 0;
+      color: #fff;
+      font-size: 20px;
+      cursor: pointer;
+      z-index: 2100;
+    }
+
+    .pp-close:focus {
+      outline: none;
+    }
+
+    .pp-body img {
+      transition: transform 320ms ease;
+    }
+
+    .pp-body:hover img {
+      transform: scale(1.01);
+    }
+
+    .pp-hint {
+      color: #fff5cc;
+      font-size: 13px;
+      text-align: center;
+      padding: 8px 12px 18px;
+    }
+
+    /* "Under Development" Modal */
+    .under-modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.86));
+      z-index: 2500;
+      padding: 26px;
+    }
+
+    .under-modal.open {
+      display: flex;
+    }
+
+    .under-card {
+      width: min(680px, 94%);
+      background: linear-gradient(180deg, rgba(20, 7, 3, 0.9), rgba(8, 2, 1, 0.95));
+      border-radius: 14px;
+      border: 1px solid rgba(255, 204, 0, 0.14);
+      padding: 28px;
+      text-align: center;
+      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.7);
+      transform: translateY(20px) scale(.98);
+      opacity: 0;
+      transition: transform 260ms ease, opacity 260ms ease;
+    }
+
+    .under-modal.open .under-card {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+
+    .under-gear {
+      width: 84px;
+      height: 84px;
+      margin: 0 auto 18px;
+      display: grid;
+      place-items: center;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 30%, rgba(255, 204, 0, 0.12), rgba(0, 0, 0, 0.1));
+      box-shadow: 0 10px 30px rgba(255, 204, 0, 0.03) inset;
+      animation: pop 600ms ease;
+    }
+
+    @keyframes pop {
+      from {
+        transform: scale(.86);
+      }
+
+      to {
+        transform: scale(1);
+      }
+    }
+
+    .gear {
+      width: 44px;
+      height: 44px;
+      position: relative;
+      display: inline-block;
+      transform-origin: 50% 50%;
+      animation: gear-rot 4s linear infinite;
+      filter: drop-shadow(0 3px 6px rgba(255, 204, 0, 0.12));
+    }
+
+    @keyframes gear-rot {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .gear:before,
+    .gear:after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
+      width: 44px;
+      height: 44px;
+      border-radius: 6px;
+      background: conic-gradient(from 180deg at 50% 50%, rgba(255, 204, 0, 0.14), rgba(255, 204, 0, 0.02));
+      border: 2px solid rgba(255, 204, 0, 0.22);
+      box-sizing: border-box;
+    }
+
+    .under-title {
+      color: #fff;
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      letter-spacing: 0.2px;
+    }
+
+    .under-msg {
+      color: #fff5cc;
+      font-size: 15px;
+      max-width: 82%;
+      margin: 8px auto 18px;
+      line-height: 1.55;
+      position: relative;
+    }
+
+    .under-msg .typing {
+      display: inline-block;
+      border-right: 2px solid rgba(255, 255, 255, 0.12);
+      padding-right: 6px;
+      animation: blink-caret 900ms steps(1) infinite;
+    }
+
+    @keyframes blink-caret {
+      50% {
+        border-color: transparent;
+      }
+    }
+
+    .progress-bar {
+      width: 70%;
+      max-width: 420px;
+      margin: 14px auto 8px;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.04);
+      border-radius: 999px;
+      overflow: hidden;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02);
+    }
+
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, rgba(255, 204, 0, 0.95), rgba(255, 220, 60, 0.9));
+      border-radius: 999px;
+      transition: width 1200ms cubic-bezier(.2, .9, .2, 1);
+    }
+
+    .under-actions {
+      margin-top: 14px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .under-btn {
+      background: transparent;
+      border: 1px solid rgba(255, 204, 0, 0.9);
+      color: var(--accent);
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .under-btn:hover {
+      background: rgba(255, 204, 0, 0.06);
+      color: #fff;
+    }
+
+    .under-close {
+      position: absolute;
+      right: 20px;
+      top: 18px;
+      background: transparent;
+      border: 0;
+      color: #fff;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .under-hint {
+      color: #ccc;
+      font-size: 12px;
+      margin-top: 8px;
+      opacity: 0.9;
+    }
+
+    /* About Modal */
+    .about-modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.86));
+      z-index: 2600;
+      padding: 26px;
+    }
+
+    .about-modal.open {
+      display: flex;
+    }
+
+    .about-card {
+      width: min(720px, 94%);
+      background: linear-gradient(180deg, rgba(18, 6, 4, 0.92), rgba(6, 2, 1, 0.98));
+      border-radius: 14px;
+      border: 1px solid rgba(255, 204, 0, 0.16);
+      padding: 22px 26px;
+      text-align: center;
+      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.8);
+      transform: translateY(18px) scale(.98);
+      opacity: 0;
+      transition: transform 300ms cubic-bezier(.2, .9, .2, 1), opacity 300ms ease;
+    }
+
+    .about-modal.open .about-card {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+      animation: aboutEntrance 420ms cubic-bezier(.16, .86, .24, 1) both;
+    }
+
+    @keyframes aboutEntrance {
+      0% {
+        transform: translateY(18px) scale(.98);
+        opacity: 0;
+        filter: blur(6px) saturate(.98);
+      }
+
+      60% {
+        transform: translateY(-6px) scale(1.02);
+        opacity: 1;
+        filter: blur(0px) saturate(1.02);
+      }
+
+      100% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+        filter: blur(0) saturate(1);
+      }
+    }
+
+    .about-hero {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+
+    .about-photo {
+      width: 72px;
+      height: 72px;
+      overflow: hidden;
+      border-radius: 8px;
+      flex: 0 0 72px;
+      border: 2px solid rgba(255, 204, 0, 0.14);
+    }
+
+    .about-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .about-title {
+      color: var(--accent);
+      font-size: 20px;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .about-sub {
+      color: var(--accent);
+      margin-bottom: 10px;
+      font-size: 14px;
+      opacity: 0.95;
+    }
+
+    .about-body {
+      color: var(--accent);
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 12px;
+      text-align: left;
+    }
+
+    .about-actions {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 10px;
+    }
+
+    .about-btn {
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 204, 0, 0.9);
+      background: transparent;
+      color: var(--accent);
+      cursor: pointer;
+    }
+
+    .about-btn:hover {
+      background: rgba(255, 204, 0, 0.06);
+      color: #fff;
+    }
+
+    .about-close {
+      position: absolute;
+      right: 18px;
+      top: 16px;
+      background: transparent;
+      border: 0;
+      color: #fff;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    /* Force all main headings to be orange */
+    .certs-title,
+    .certificate-info h3 {
+      color: var(--accent) !important;
+    }
+
+    /* Accessibility */
+    @media (prefers-reduced-motion: reduce) {
+
+      .about-card,
+      .under-card,
+      .pp-card,
+      .certificate,
+      .fade-in,
+      .proj-card {
+        transition: none !important;
+        animation: none !important;
+        transform: none !important;
+        opacity: 1 !important;
+      }
+
+      .floating-text,
+      canvas#network-bg,
+      .gear {
+        animation: none !important;
+        display: none !important;
+      }
+    }
+
+    /* MOBILE: keep nav visible, make it scrollable, adjust profile pic and avoid overlap */
+    @media (max-width: 980px) {
+
+      /* make header a slight overlay so nav text is readable over hero image */
+      header {
+        padding: 10px 16px;
+        background: rgba(0, 0, 0, 0.45) !important;
+      }
+
+      /* show nav as a horizontal scrollable row (prevents hiding/clipping) */
+      nav {
+        display: flex !important;
+        gap: 12px;
+        align-items: center;
+        justify-content: center;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: 6px 0;
+        margin: 0 auto;
+      }
+
+      nav::-webkit-scrollbar {
+        height: 6px;
+      }
+
+      nav::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.06);
+        border-radius: 6px;
+      }
+
+      /* make nav links comfortable tappable targets */
+      nav a {
+        white-space: nowrap;
+        padding: 8px 10px;
+        font-size: 15px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      /* ensure header does not hide page content (approx header height) */
+      body {
+        padding-top: calc((10px * 2) + 48px);
+      }
+
+      /* header vertical padding + expected header content height */
+
+      /* push hero content down a bit to avoid overlap with fixed header */
+      .hero-container {
+        padding-top: 80px;
+      }
+
+      /* reposition & reduce profile pic so it doesn't stick to the very top */
+      .profile-pic {
+        left: 16px;
+        top: 12px;
+        transform: none;
+        /* remove translateY to place it at a fixed top offset */
+      }
+
+      .profile-pic img {
+        width: 48px;
+        height: 48px;
+        border-width: 2px;
+      }
+    }
+
+    /* extra tiny adjustments for very small screens */
+    @media (max-width: 480px) {
+      nav a {
+        font-size: 14px;
+        padding: 7px 9px;
+      }
+
+      .profile-pic {
+        left: 12px;
+        top: 10px;
+      }
+
+      .profile-pic img {
+        width: 44px;
+        height: 44px;
+      }
+
+      .hero-container {
+        padding-top: 90px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <canvas id="network-bg"></canvas>
+
+  <header>
+    <div class="profile-pic"><img id="profilePic" src="Sasi.jpg" alt="Profile picture" /></div>
+    <nav>
+      <a id="indexLink" href="NavBar.html">Home</a>
+      <a id="aboutLink" href="#experience">About</a>
+      <a href="Resume1.pdf">Resume</a>
+      <a id="contactLink" href="#contact">Contact</a>
+      <a id="blogLink" href="#">Blog</a>
+    </nav>
+  </header>
+
+  <main>
+    <div class="hero-container" id="hero">
+      <div class="text-content">
+        <h1>
+          Aspiring AI and ML model developer.<br>
+          Fueled by research, focused on innovation.<br>
+          Future-ready to build intelligent solutions.
+        </h1>
+        <p>
+          Welcome to my portfolio! I'm a passionate and dedicated student ready to bring fresh ideas and strong work
+          ethic to the professional world.<br>
+          With a solid foundation in my field and hands-on project experience, I'm excited to contribute, learn, and
+          grow.
+        </p>
+        <a href="Resume1.pdf" download><button class="resume-btn">Download Resume</button></a>
+      </div>
+      <div class="image">
+        <img src="profile3.jpg" alt="Profile picture" />
+      </div>
+    </div>
+
+    <section id="skills">
+      <div class="container fade-in">
+        <h2>Skills & Technologies</h2>
+        <div class="skills-grid">
+          <div class="skill-item">Python</div>
+          <div class="skill-item">GitHub</div>
+          <div class="skill-item">HTML</div>
+          <div class="skill-item">CSS</div>
+          <div class="skill-item">JavaScript</div>
+          <div class="skill-item">React.js</div>
+          <div class="skill-item">SQL</div>
+          <div class="skill-item">Artificial Intelligence</div>
+          <div class="skill-item">Data Analysis</div>
+          <div class="skill-item">Machine Learning</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience">
+      <div class="container fade-in">
+        <h2>Work Experience</h2>
+        <div class="card">
+          <div class="card-header">
+            <h3>Software Developer Intern @ ConceptVines</h3>
+            <span>2025 - Present</span>
+          </div>
+          <ul>
+            <li>Developing scalable, high-performance software applications with a focus on clean architecture and
+              maintainable code.</li>
+            <li>Troubleshooting bugs, optimizing performance, and improving code quality through reviews and best
+              practices.</li>
+            <li>CCollaborating with designers, backend engineers, and QA teams to deliver reliable, production-ready
+              software.</li>
+          </ul>
+          <div class="tags">
+            <span class="tag">Python</span>
+            <span class="tag">HTML</span>
+            <span class="tag">CSS</span>
+            <div class="tag">Artificial Intelligence</div>
+            <span class="tag">Machine Learning</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <h3>ReactJS Intern @ SSS Group of companies</h3>
+            <span>July 2025</span>
+          </div>
+          <ul>
+            <li>Developed modern, responsive front-end applications with a focus on UX and performance using HTML, CSS,
+              and JavaScript.</li>
+            <li>Enhanced UI responsiveness and performance through component optimization and best practices.</li>
+            <li>Added motion and micro-interactions with Framer Motion to improve perceived performance and user
+              engagement.</li>
+          </ul>
+          <div class="tags">
+            <span class="tag">React.js</span>
+            <span class="tag">HTML</span>
+            <span class="tag">CSS</span>
+            <span class="tag">JavaScript</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="container">
+        <h2 style="text-align: center;">Featured Projects</h2>
+        <section class="projects" aria-label="Projects">
+          <article class="proj-card" id="proj-lung">
+            <div class="proj-head">
+              <div class="proj-thumb" tabindex="0" role="button" aria-label="Open Lung project image"
+                data-large="lung.png">
+                <img src="lung.png" alt="Lung project thumb">
+              </div>
+              <div>
+                <div class="proj-title">Lung Cancer Detection — EfficientNet</div>
+                <div class="proj-sub">High accuracy chest X-ray classification with visual explanations</div>
+              </div>
+            </div>
+            <div class="proj-body">
+              Summary: Trained an EfficientNet-based classifier for lung cancer detection using your dataset. The model
+              achieved a test accuracy of <strong>99%</strong> on the provided test split.
+              <ul style="color:#fff5cc; margin-top:8px">
+                <li>Model: EfficientNet-B0 (PyTorch)</li>
+                <li>Explainability: Grad-CAM overlays to highlight suspicious regions and aid interpretability</li>
+              </ul>
+              <div class="progress" aria-hidden="true">
+                <div class="progress-fill" style="width:0%" data-final="100"></div>
+              </div>
+              <div class="tech-list" aria-hidden="true">
+                <span class="tech">PyTorch</span>
+                <span class="tech">EfficientNet-B0</span>
+                <span class="tech">Grad-CAM</span>
+              </div>
+              <div class="proj-cta">
+                <button class="btn" onclick="animateProgress(this)">Show training progress</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="proj-card" id="proj-esophagus">
+            <div class="proj-head">
+              <div class="proj-thumb" tabindex="0" role="button" aria-label="Open Esophagus project image"
+                data-large="foodpipe.png">
+                <img src="foodpipe.png" alt="Esophagus project thumb">
+              </div>
+              <div>
+                <div class="proj-title">Esophageal Cancer Detection — Smartphone Imaging</div>
+                <div class="proj-sub">Non-invasive detection pipeline optimized for phone images</div>
+              </div>
+            </div>
+            <div class="proj-body">
+              Summary: Developing an EfficientNet-based system designed to detect esophageal cancer from
+              smartphone-captured images. The focus is on robust pre-processing and Grad-CAM explanations.
+              <ul style="color:#ffddb8; margin-top:8px">
+                <li>Model filename: <code>efficientnet_esophagus_best.pth</code></li>
+                <li>Input: smartphone photos (and batch folder support)</li>
+              </ul>
+              <div class="progress" aria-hidden="true">
+                <div class="progress-fill" style="width:0%" data-final="65"></div>
+              </div>
+              <div class="tech-list" aria-hidden="true">
+                <span class="tech">EfficientNet</span>
+                <span class="tech">pytorch-grad-cam</span>
+                <span class="tech">Mobile-first UX</span>
+              </div>
+              <div class="proj-cta">
+                <button class="btn" onclick="animateProgress(this)">Show pipeline</button>
+              </div>
+            </div>
+          </article>
+        </section>
+      </div>
+    </section>
+
+    <section id="proficiency">
+      <div class="container fade-in">
+        <h2>Technical Proficiency</h2>
+        <div class="proficiency-group">
+          <h3>Frontend</h3>
+          <div class="proficiency-item">
+            <div class="skill-info">
+              <span>React.js</span>
+              <span>Advanced</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-level" style="width: 90%;"></div>
+            </div>
+          </div>
+          <div class="proficiency-item">
+            <div class="skill-info">
+              <span>CSS</span>
+              <span>Expert</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-level" style="width: 85%;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="proficiency-group">
+          <h3>Programs & Tools</h3>
+          <div class="proficiency-item">
+            <div class="skill-info">
+              <span>Python</span>
+              <span>Advanced</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-level" style="width: 95%;"></div>
+            </div>
+          </div>
+          <div class="proficiency-item">
+            <div class="skill-info">
+              <span>VS Code</span>
+              <span>Advanced</span>
+            </div>
+            <div class="skill-bar">
+              <div class="skill-level" style="width: 90%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="certificates" aria-label="Certificates">
+      <h2 class="certs-title">Certificates & Achievements</h2>
+      <div class="certificate">
+        <div class="certificate-info">
+          <h3>Software Developer Internship Completion — ConceptVines</h3>
+          <p>ConceptVines ·February 2026</p>
+          <span>Completed a hands-on internship as a Software Developer at ConceptVines, working on scalable
+            applications using Python, AI, and Machine Learning. Focused on clean architecture, performance
+            optimization, and cross-team collaboration.</span>
+        </div>
+        <div class="cert-embed-wrap">
+          <img class="cert-fixed-img" src="Conceptvines.jpg" alt="ConceptVines internship completion certificate">
+        </div>
+      </div>
+      <div class="certificate">
+        <div class="certificate-info">
+          <h3>AWS Certificate in Machine Learning & AI Fundamentals</h3>
+          <p>Amazon ML Certificate · August 2025</p>
+          <span>Completed a course introducing key concepts in Machine Learning.</span>
+        </div>
+        <div class="cert-embed-wrap">
+          <img class="cert-fixed-img" src="Amazon ML certificate.png" alt="AI for Everyone certificate">
+        </div>
+      </div>
+      <div class="certificate">
+        <div class="certificate-info">
+          <h3>AWS Certificate in Cloud Practitioner Essential</h3>
+          <p>Amazon Cloud Essential Certificate · August 2025</p>
+          <span>Gained foundational expertise in AWS cloud concepts, core services, security, pricing, and architectural
+            best practices.</span>
+        </div>
+        <div class="cert-embed-wrap">
+          <img class="cert-fixed-img" src="Amazon AWS certificate.png" alt="Deep Learning certificate">
+        </div>
+      </div>
+      <div class="certificate">
+        <div class="certificate-info">
+          <h3>Python for Data Science</h3>
+          <p>Udemy Certificate · June 2025</p>
+          <span>Learned Python, NumPy, Pandas, and Matplotlib for analysis and visualization.</span>
+        </div>
+        <div class="cert-embed-wrap">
+          <img class="cert-fixed-img" src="udemy.png" alt="The complete python bootcamp certificate">
+        </div>
+      </div>
+      <div class="certificate">
+        <div class="certificate-info">
+          <h3>Python Programming Workshop</h3>
+          <p>Top Engineers · January 2025</p>
+          <span>Foundational course covering Python syntax, data structures, control flow, functions, and
+            object-oriented
+            programming.</span>
+        </div>
+        <div class="cert-embed-wrap">
+          <img class="cert-fixed-img" src="iit.png" alt="Machine Learning certificate">
+        </div>
+      </div>
+      <div class="certificate">
+        <div class="certificate-info">
+          <h3>ReactJS Internship Completion</h3>
+          <p>SSS Group of companies · July 2025</p>
+          <span>Hands-on internship focusing on HTML, CSS, JavaScript and Web development.</span>
+        </div>
+        <div class="cert-embed-wrap">
+          <img class="cert-fixed-img" src="SSS.png" alt="Internship certificate">
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container fade-in">
+        <div class="contact-info">
+          <h2>Get in Touch</h2>
+          <p>Have a project in mind? Looking to collaborate? Drop me a message, and let's create something amazing
+            together.</p>
+          <ul>
+            <li><strong>GitHub</strong> <a href="https://github.com/sasidhar-sys">@sasidhar-sys</a></li>
+            <li><strong>Email</strong> <a href="#">mailtosasi.official@gmail.com</a></li>
+            <LI><STRONG>Location</STRONG> India</LI>
+          </ul>
+        </div>
+
+        <form class="contact-form">
+          <div class="form-group">
+            <label for="name">Your Name</label>
+            <input type="text" id="name" name="name" placeholder="Your Name">
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="abc@example.com">
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" placeholder="Send your message here..."></textarea>
+          </div>
+          <button type="submit" class="btn">Send Message</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+
+  <div id="imgModal" class="img-modal" aria-hidden="true" role="dialog" aria-label="Image preview">
+    <button id="imgClose" class="img-close" aria-label="Close image preview">&times;</button>
+    <div class="img-card" role="document">
+      <div class="img-wrap">
+        <img id="imgModalImg" src="" alt="Project large preview">
+      </div>
+    </div>
+  </div>
+
+  <div id="ppModal" class="pp-modal" aria-hidden="true" role="dialog" aria-label="Profile photo viewer">
+    <button id="ppCloseBtn" class="pp-close" aria-label="Close profile viewer">&times;</button>
+    <div class="pp-card" role="document">
+      <div class="pp-header">
+        <div class="thumb"><img id="ppThumb" src="Sasi.jpg" alt="Sasidhar"></div>
+        <div class="meta">
+          <div class="name">Sasidhar A</div>
+          <div class="sub">AI & DS • Student</div>
+        </div>
+      </div>
+      <div class="pp-body">
+        <img id="ppLarge" src="profile2.jpg" alt="Sasidhar large photo">
+      </div>
+      <div class="pp-hint">Press ESC or click outside to close</div>
+    </div>
+  </div>
+
+  <div id="underModal" class="under-modal" aria-hidden="true" role="dialog" aria-label="Blog under development">
+    <div class="under-card" role="document">
+      <button id="underClose" class="under-close" aria-label="Close under development modal">&times;</button>
+      <div class="under-gear" aria-hidden="true">
+        <div class="gear" role="img" aria-label="loading gear"></div>
+      </div>
+      <div class="under-title">Blog — Under Development</div>
+      <div class="under-msg">
+        <span class="typing">We're building something great for sharing projects, guides and tutorials.</span>
+      </div>
+      <div class="progress-bar" aria-hidden="true">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <div class="under-actions">
+        <button id="notifyBtn" class="under-btn">Notify me</button>
+        <button id="closeBtn2" class="under-btn">Close</button>
+      </div>
+      <div class="under-hint">Thanks for your patience — this will be ready soon 🚧</div>
+    </div>
+  </div>
+
+  <div id="aboutModal" class="about-modal" aria-hidden="true" role="dialog" aria-label="About information (preview)">
+    <button id="aboutClose" class="about-close" aria-label="Close about modal">&times;</button>
+    <div class="about-card" role="document" aria-live="polite">
+      <div class="about-hero">
+        <div class="about-photo"><img src="Sasi.jpg" alt="Sasidhar"></div>
+        <div>
+          <div class="about-title">About — Sasidhar A</div>
+          <div class="about-sub">AI & ML model developer • Student</div>
+        </div>
+      </div>
+      <div class="about-body">
+        Welcome to my portfolio! I'm a passionate and dedicated student ready to bring fresh ideas and strong work ethic
+        to the professional world.
+        With a solid foundation in my field and hands-on project experience, I'm excited to contribute, learn, and grow.
+      </div>
+      <div class="about-actions">
+        <button id="aboutNotify" class="about-btn">Keep me updated</button>
+        <button id="aboutMore" class="about-btn">Open full About</button>
+      </div>
+      <div class="under-hint" style="margin-top:10px">Tip: press ESC or click outside to close</div>
+    </div>
+  </div>
+
+  <script>
+    /* ========================================
+    == JAVASCRIPT (ALL FEATURES COMBINED) ===
+    ========================================
+    */
+
+    // --- Particle Background (from NavBar.html) ---
+    const canvas = document.getElementById('network-bg');
+    const ctx = canvas.getContext('2d');
+    function resize() { canvas.width = innerWidth; canvas.height = innerHeight; }
+    window.addEventListener('resize', resize);
+    resize();
+
+    let particles = [];
+    const NUM = 90;
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.vx = (Math.random() - 0.5) * 0.6;
+        this.vy = (Math.random() - 0.5) * 0.6;
+        this.r = 2 + Math.random() * 2.5;
+      }
+      update() {
+        this.x += this.vx; this.y += this.vy;
+        if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+        ctx.fillStyle = '#FFCC00';
+        ctx.shadowColor = '#FFCC00';
+        ctx.shadowBlur = 8;
+        ctx.fill();
+      }
+    }
+    function initParticles() { particles = []; for (let i = 0; i < NUM; i++) particles.push(new Particle()); }
+    function connect() {
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const d = Math.sqrt(dx * dx + dy * dy);
+          if (d < 140) {
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = `rgba(255,204,0,${1 - d / 140})`;
+            ctx.lineWidth = 0.8;
+            ctx.stroke();
+          }
+        }
+      }
+    }
+    function loop() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => { p.update(); p.draw(); });
+      connect();
+      requestAnimationFrame(loop);
+    }
+    initParticles(); loop();
+
+    // --- Floating Keywords ---
+    const keywords = ["AI", "ML", "Deep Learning", "Neural Nets", "Data", "Research", "Innovation"];
+    for (let i = 0; i < 7; i++) {
+      const s = document.createElement('span');
+      s.className = 'floating-text';
+      s.textContent = keywords[i % keywords.length];
+      s.style.left = (8 + Math.random() * 80) + 'vw';
+      s.style.animationDuration = (18 + Math.random() * 12) + 's';
+      s.style.animationDelay = -(Math.random() * 24) + 's'; // stagger across timeline
+      s.style.fontSize = (11 + Math.random() * 8) + 'px';
+      document.body.appendChild(s);
+    }
+
+    // --- Combined Intersection Observer (for all fade-in sections) ---
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target); // Stop observing once visible
+        }
+      });
+    }, { threshold: 0.15 });
+
+    // Observe all animated sections
+    document.querySelectorAll('.certificate, .fade-in, .proj-card').forEach(el => observer.observe(el));
+
+
+    // --- Project Card Modals (from about.html) ---
+    const imgModal = document.getElementById('imgModal');
+    const modalImg = document.getElementById('imgModalImg');
+    const imgClose = document.getElementById('imgClose');
+
+    function openImgModal(src, alt) {
+      if (!imgModal) return;
+      imgModal.classList.add('open');
+      imgModal.setAttribute('aria-hidden', 'false');
+      modalImg.src = src || '';
+      modalImg.alt = alt || 'Preview';
+      document.documentElement.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden';
+      if (imgClose) imgClose.focus();
+    }
+
+    function closeImgModal() {
+      if (!imgModal) return;
+      imgModal.classList.remove('open');
+      imgModal.setAttribute('aria-hidden', 'true');
+      modalImg.src = '';
+      document.documentElement.style.overflow = '';
+      document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('.proj-thumb').forEach(thumb => {
+      const img = thumb.querySelector('img');
+      const large = thumb.dataset.large || (img ? img.src : '');
+      thumb.addEventListener('click', () => openImgModal(large, img ? img.alt : 'Image'));
+      thumb.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openImgModal(large, img ? img.alt : 'Image'); }
+      });
+    });
+
+    if (imgClose) imgClose.addEventListener('click', closeImgModal);
+    if (imgModal) imgModal.addEventListener('click', (e) => { if (e.target === imgModal) closeImgModal(); });
+    window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && imgModal && imgModal.classList.contains('open')) closeImgModal(); });
+
+    // --- Project Progress Bar Animation (from about.html) ---
+    function animateProgress(btn) {
+      const card = btn.closest('.proj-card');
+      if (!card) return;
+      const fill = card.querySelector('.progress-fill');
+      const target = Number(fill.dataset.final) || 80;
+      fill.style.width = '0%';
+      setTimeout(() => fill.style.width = target + '%', 40);
+      const orig = btn.textContent;
+      btn.textContent = 'Animating…';
+      btn.disabled = true;
+      setTimeout(() => { btn.textContent = orig; btn.disabled = false; }, 1400);
+    }
+
+    // --- Profile Pic Modal (from NavBar.html) ---
+    const profilePic = document.getElementById('profilePic');
+    const ppModal = document.getElementById('ppModal');
+    const ppCloseBtn = document.getElementById('ppCloseBtn');
+    const ppLarge = document.getElementById('ppLarge');
+
+    function openProfileModal() {
+      if (!ppModal) return;
+      ppModal.classList.add('open');
+      ppModal.setAttribute('aria-hidden', 'false');
+      document.documentElement.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden';
+      if (ppCloseBtn) ppCloseBtn.focus();
+    }
+
+    function closeProfileModal() {
+      if (!ppModal) return;
+      ppModal.classList.remove('open');
+      ppModal.setAttribute('aria-hidden', 'true');
+      document.documentElement.style.overflow = '';
+      document.body.style.overflow = '';
+      if (profilePic) profilePic.focus();
+    }
+
+    if (profilePic) profilePic.addEventListener('click', (e) => {
+      if (ppLarge) ppLarge.src = 'profile2.jpg'; // Assuming this is the large image
+      openProfileModal();
+    });
+
+    if (ppCloseBtn) ppCloseBtn.addEventListener('click', closeProfileModal);
+    if (ppModal) ppModal.addEventListener('click', (e) => {
+      if (e.target === ppModal) closeProfileModal();
+    });
+
+    const ppCard = ppModal ? ppModal.querySelector('.pp-card') : null;
+    if (ppCard) ppCard.addEventListener('click', (e) => e.stopPropagation());
+
+    if (profilePic) profilePic.setAttribute('tabindex', '0');
+    if (profilePic) profilePic.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        if (ppLarge) ppLarge.src = 'profile2.jpg';
+        openProfileModal();
+      }
+    });
+
+    // --- "Under Development" Modal (from NavBar.html) ---
+    const blogLink = document.getElementById('blogLink');
+    const underModal = document.getElementById('underModal');
+    const underClose = document.getElementById('underClose');
+    const closeBtn2 = document.getElementById('closeBtn2');
+    const notifyBtn = document.getElementById('notifyBtn');
+    const progressFill = document.getElementById('progressFill');
+
+    function openUnderModal() {
+      if (!underModal) return;
+      underModal.classList.add('open');
+      underModal.setAttribute('aria-hidden', 'false');
+      document.documentElement.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden';
+      if (progressFill) {
+        progressFill.style.width = '0%';
+        setTimeout(function () { progressFill.style.width = '76%'; }, 60);
+      }
+    }
+
+    function closeUnderModal() {
+      if (!underModal) return;
+      underModal.classList.remove('open');
+      underModal.setAttribute('aria-hidden', 'true');
+      document.documentElement.style.overflow = '';
+      document.body.style.overflow = '';
+      if (blogLink) blogLink.focus();
+      if (progressFill) {
+        setTimeout(function () { progressFill.style.width = '0%'; }, 300);
+      }
+    }
+
+    if (blogLink) {
+      blogLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        openUnderModal();
+      });
+      blogLink.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openUnderModal(); } });
+    }
+
+    if (underClose) underClose.addEventListener('click', closeUnderModal);
+    if (closeBtn2) closeBtn2.addEventListener('click', closeUnderModal);
+    if (underModal) underModal.addEventListener('click', (e) => { if (e.target === underModal) closeUnderModal(); });
+
+    if (notifyBtn) {
+      notifyBtn.addEventListener('click', () => {
+        notifyBtn.textContent = 'Got it — we’ll notify';
+        notifyBtn.disabled = true;
+        notifyBtn.style.opacity = '0.85';
+        setTimeout(() => { notifyBtn.textContent = 'Notify me'; notifyBtn.disabled = false; notifyBtn.style.opacity = ''; }, 2200);
+      });
+    }
+
+    // --- About Modal (from NavBar.html) ---
+    const aboutLink = document.getElementById('aboutLink');
+    const aboutModal = document.getElementById('aboutModal');
+    const aboutClose = document.getElementById('aboutClose');
+    const aboutNotify = document.getElementById('aboutNotify');
+    const aboutMore = document.getElementById('aboutMore');
+
+    function openAboutModal() {
+      if (!aboutModal) return;
+      aboutModal.classList.add('open');
+      aboutModal.setAttribute('aria-hidden', 'false');
+      document.documentElement.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden';
+      const card = aboutModal.querySelector('.about-card');
+      if (card) {
+        card.style.boxShadow = '0 40px 120px rgba(255, 204, 0, 0.06)';
+        setTimeout(() => { card.style.boxShadow = ''; }, 700);
+      }
+    }
+
+    function closeAboutModal() {
+      if (!aboutModal) return;
+      aboutModal.classList.remove('open');
+      aboutModal.setAttribute('aria-hidden', 'true');
+      document.documentElement.style.overflow = '';
+      document.body.style.overflow = '';
+      if (aboutLink) aboutLink.focus();
+    }
+
+    if (aboutLink) {
+      aboutLink.addEventListener('click', (e) => {
+        // This link now scrolls, so we don't want the modal.
+        // e.preventDefault();
+        // openAboutModal(); 
+
+        // If you DO want the modal instead of scrolling, uncomment the two lines above.
+      });
+      aboutLink.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          // e.preventDefault();
+          // openAboutModal();
+        }
+      });
+    }
+
+    if (aboutClose) aboutClose.addEventListener('click', closeAboutModal);
+    if (aboutModal) aboutModal.addEventListener('click', (e) => { if (e.target === aboutModal) closeAboutModal(); });
+
+    if (aboutNotify) {
+      aboutNotify.addEventListener('click', () => {
+        aboutNotify.textContent = 'Noted — thanks';
+        aboutNotify.disabled = true;
+        setTimeout(() => {
+          aboutNotify.textContent = 'Keep me updated';
+          aboutNotify.disabled = false;
+        }, 2200);
+      });
+    }
+
+    if (aboutMore) {
+      aboutMore.addEventListener('click', () => {
+        window.open('about.html', '_blank'); // Assumes you still have about.html
+      });
+    }
+
+    // --- Global ESC key listener for all modals ---
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (ppModal && ppModal.classList.contains('open')) closeProfileModal();
+        if (underModal && underModal.classList.contains('open')) closeUnderModal();
+        if (aboutModal && aboutModal.classList.contains('open')) closeAboutModal();
+      }
+    });
+
+  </script>
+  <link rel="stylesheet" href="chatbot.css">
+  <script src="chatbot.js"></script>
+</body>
+
+</html>

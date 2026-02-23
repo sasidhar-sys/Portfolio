@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact - Sasidhar</title>
+  <style>
+    :root {
+      --bg: #1b1b1b;
+      --card: #111;
+      --muted: #ddd;
+      --accent: #FFCC00;
+      --accent-2: #FFD700;
+      --glass: rgba(255, 204, 0, 0.08);
+      --radius: 12px;
+      --ease: cubic-bezier(.2, .9, .2, 1);
+    }
+
+    /* base reset */
+    * {
+      box-sizing: border-box
+    }
+
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      -webkit-font-smoothing: antialiased
+    }
+
+    body {
+      background-color: var(--bg);
+      color: white;
+      min-height: 100vh;
+      overflow-x: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 18px;
+    }
+
+    /* ---------- particles canvas (subtle) ---------- */
+    canvas#bgParticles {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.9;
+      mix-blend-mode: lighten;
+    }
+
+    /* floating keywords (like other pages) */
+    .floating-text {
+      position: fixed;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      pointer-events: none;
+      z-index: 0;
+      text-shadow: 0 0 8px rgba(255, 204, 0, 0.15);
+      opacity: 0.9;
+      will-change: transform, opacity;
+      animation: floatText 18s linear infinite;
+    }
+
+    @keyframes floatText {
+      from {
+        transform: translateY(100vh) scale(.98);
+        opacity: 0;
+      }
+
+      20% {
+        opacity: 1;
+      }
+
+      to {
+        transform: translateY(-10vh) scale(1.05);
+        opacity: 0;
+      }
+    }
+
+    /* decorative drifting radial accent (subtle) */
+    .bg-accent {
+      position: fixed;
+      right: -6%;
+      top: -6%;
+      width: 420px;
+      height: 420px;
+      pointer-events: none;
+      background: radial-gradient(circle at 20% 20%, rgba(255, 204, 0, 0.06), rgba(255, 204, 0, 0.02) 18%, transparent 40%);
+      filter: blur(16px);
+      transform: translateZ(0);
+      z-index: 0;
+      animation: accentFloat 9s var(--ease) infinite alternate;
+    }
+
+    @keyframes accentFloat {
+      from {
+        transform: translateY(0) translateX(0) rotate(0deg) scale(1);
+      }
+
+      to {
+        transform: translateY(10px) translateX(-8px) rotate(1deg) scale(1.02);
+      }
+    }
+
+    /* ---------- main card ---------- */
+    .contact-container {
+      position: relative;
+      max-width: 920px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 36px;
+      background-color: var(--card);
+      border-radius: var(--radius);
+      box-shadow: 0 12px 44px rgba(0, 0, 0, 0.6), 0 0 30px var(--glass);
+      border: 1px solid rgba(255, 204, 0, 0.06);
+      z-index: 3;
+
+      transform: translateY(22px) scale(.995);
+      opacity: 0;
+      transition: transform 520ms var(--ease), opacity 460ms ease;
+      will-change: transform, opacity;
+      overflow: visible;
+    }
+
+    .contact-container.show {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+
+    /* 3D micro-tilt effect (subtle) */
+    .contact-container.tilt {
+      transition: transform 160ms ease;
+      transform-origin: center center;
+      will-change: transform;
+    }
+
+    header.top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+      gap: 12px;
+    }
+
+    .brand {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      z-index: 4;
+    }
+
+    .brand-thumb {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 2px solid rgba(255, 204, 0, 0.14);
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+      background: #000;
+      cursor: pointer;
+    }
+
+    .brand-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    h2 {
+      color: var(--accent);
+      font-size: 30px;
+      margin: 0;
+      text-align: left;
+      letter-spacing: 0.2px;
+      z-index: 4;
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    /* glowing spark next to heading */
+    .heading-spark {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #fff, var(--accent));
+      box-shadow: 0 6px 18px rgba(255, 204, 0, 0.18);
+      transform: scale(.95);
+      transition: transform 420ms var(--ease), box-shadow 420ms var(--ease);
+    }
+
+    .contact-container.show .heading-spark {
+      transform: scale(1.08);
+      box-shadow: 0 14px 38px rgba(255, 204, 0, 0.22);
+    }
+
+    .content {
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 22px;
+      align-items: start;
+    }
+
+    /* left text column */
+    .left p {
+      font-size: 17px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 12px;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: transform 420ms var(--ease), opacity 420ms ease;
+    }
+
+    .left p.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* contact row layout */
+    .contact-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+
+    .contact-row strong {
+      width: 110px;
+      color: #fff;
+      font-size: 15px;
+    }
+
+    .contact-row .val {
+      color: var(--muted);
+      font-size: 15px;
+    }
+
+    /* interactive link style & animated underline */
+    a.inline {
+      color: var(--accent);
+      text-decoration: none;
+      position: relative;
+      transition: color 220ms ease;
+    }
+
+    a.inline::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      height: 2px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      transition: width 320ms var(--ease);
+      border-radius: 2px;
+    }
+
+    a.inline:hover::after,
+    a.inline:focus::after {
+      width: 100%;
+    }
+
+    a.inline:hover,
+    a.inline:focus {
+      color: var(--accent-2);
+      outline: none;
+    }
+
+    /* right column: quick cards & social */
+    .right {
+      background: linear-gradient(180deg, rgba(255, 204, 0, 0.02), transparent 20%);
+      border-radius: 10px;
+      padding: 12px;
+      border: 1px solid rgba(255, 204, 0, 0.04);
+      box-shadow: inset 0 6px 18px rgba(0, 0, 0, 0.45);
+    }
+
+    .right .mini {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      padding: 10px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+      background: rgba(255, 255, 255, 0.02);
+      transition: transform 280ms var(--ease), box-shadow 280ms var(--ease);
+      cursor: default;
+    }
+
+    .right .mini:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+    }
+
+    .mini .icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      background: rgba(255, 204, 0, 0.06);
+      border: 1px solid rgba(255, 204, 0, 0.06);
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .mini .label {
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .mini .small {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    /* social icons row */
+    .socials {
+      display: flex;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .social {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.02);
+      color: var(--accent);
+      cursor: pointer;
+      transition: transform 220ms var(--ease), background 220ms var(--ease);
+    }
+
+    .social:hover {
+      transform: translateY(-6px) scale(1.04);
+      background: rgba(255, 204, 0, 0.06);
+      color: #fff;
+    }
+
+    /* back button */
+    .back-home {
+      margin-top: 16px;
+      display: flex;
+      justify-content: center;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 420ms ease, transform 420ms var(--ease);
+    }
+
+    .back-home.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .back-home a {
+      text-decoration: none;
+      color: #000;
+      background-color: var(--accent);
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: 700;
+      box-shadow: 0 8px 30px rgba(255, 204, 0, 0.08);
+      transition: transform 220ms var(--ease), box-shadow 220ms var(--ease);
+      display: inline-block;
+    }
+
+    .back-home a:hover {
+      transform: translateY(-6px);
+      background: var(--accent-2);
+      box-shadow: 0 18px 60px rgba(255, 204, 0, 0.12);
+    }
+
+    /* toast for copy feedback */
+    .toast {
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 32px;
+      z-index: 9999;
+      background: rgba(0, 0, 0, 0.75);
+      color: #fff;
+      padding: 10px 14px;
+      border-radius: 10px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 240ms ease, transform 240ms var(--ease);
+      transform-origin: center;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translate(-50%, -6px);
+      pointer-events: auto;
+    }
+
+    /* small accessibility */
+    @media (prefers-reduced-motion: reduce) {
+
+      canvas#bgParticles,
+      .floating-text,
+      .bg-accent,
+      .contact-container,
+      .mini,
+      .social,
+      .back-home {
+        animation: none !important;
+        transition: none !important;
+        transform: none !important;
+      }
+    }
+
+    /* responsive */
+    @media (max-width:820px) {
+      .content {
+        grid-template-columns: 1fr;
+      }
+
+      .right {
+        order: -1;
+      }
+
+      h2 {
+        font-size: 26px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <canvas id="bgParticles" aria-hidden="true"></canvas>
+  <div class="floating-text" style="left:6vw; top:72vh; animation-duration:18s;">AI</div>
+  <div class="floating-text" style="left:62vw; top:82vh; animation-duration:22s;">ML</div>
+  <div class="floating-text" style="left:38vw; top:88vh; animation-duration:20s;">Research</div>
+  <div class="bg-accent" aria-hidden="true"></div>
+
+  <div class="contact-container" id="contactCard" role="region" aria-labelledby="contactHeading">
+    <header class="top" aria-hidden="false">
+      <div class="brand">
+        <div class="brand-thumb" id="profileThumb" title="Open profile">
+          <img src="profile.jpg" alt="Sasidhar">
+        </div>
+        <div>
+          <h2 id="contactHeading"><span class="heading-spark" aria-hidden="true"></span> Contact Me</h2>
+        </div>
+      </div>
+    </header>
+
+    <div class="content">
+      <div class="left" id="leftCol">
+        <p class="p0"><strong>Email:</strong> <a class="inline" id="emailLink"
+            href="mailto:mailtosasi.official@gmail.com">mailtosasi.official@gmail.com</a>
+          <button aria-label="Copy email" id="copyEmail" title="Copy email"
+            style="margin-left:10px;background:transparent;border:0;color:var(--accent);cursor:pointer;font-weight:700">Copy</button>
+        </p>
+
+        <p class="p1 contact-row"><strong>Phone:</strong> <span class="val" id="phoneText">+91-9677119933</span>
+          <button aria-label="Copy phone" id="copyPhone" title="Copy phone"
+            style="margin-left:10px;background:transparent;border:0;color:var(--accent);cursor:pointer;font-weight:700">Copy</button>
+        </p>
+
+        <p class="p2 contact-row"><strong>LinkedIn:</strong> <a class="inline"
+            href="https://www.linkedin.com/in/sasidhar-arumugam-ba293b290" target="_blank" rel="noopener">Sasidhar
+            LinkedIn</a></p>
+
+        <p class="p3 contact-row"><strong>GitHub:</strong> <a class="inline" href="https://github.com/sasidhar-sys"
+            target="_blank" rel="noopener">sasidhar-sys - GitHub</a></p>
+
+        <div class="back-home" id="backHome"><a href="NavBar.html" id="backBtn">← Back to Home</a></div>
+      </div>
+
+      <aside class="right" id="rightCol">
+        <div class="mini">
+          <div class="icon">99</div>
+          <div>
+            <div class="label">Lung model</div>
+            <div class="small">EfficientNet — 99% test acc</div>
+          </div>
+        </div>
+
+        <div class="mini">
+          <div class="icon">ES</div>
+          <div>
+            <div class="label">Esophageal</div>
+            <div class="small">Mobile-first pipeline</div>
+          </div>
+        </div>
+
+        <div style="height:8px"></div>
+
+        <div style="font-size:13px;color:var(--muted);margin-bottom:8px">Connect</div>
+        <div class="socials" aria-hidden="false">
+          <a class="social" href="mailto:mailtosasi.official@gmail.com" title="Email"><svg width="18" height="18"
+              viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="M3 6.5v11A2.5 2.5 0 0 0 5.5 20h13A2.5 2.5 0 0 0 21 17.5v-11A2.5 2.5 0 0 0 18.5 4h-13A2.5 2.5 0 0 0 3 6.5Z"
+                stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg></a>
+          <a class="social" href="https://www.linkedin.com/in/sasidhar-arumugam-ba293b290" target="_blank"
+            title="LinkedIn" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+              aria-hidden="true">
+              <path
+                d="M4.983 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v11H3zM9 9h3.8v1.5h.05c.53-1 1.83-2 3.77-2 4.03 0 4.78 2.65 4.78 6.1V20H18v-5.1c0-1.2 0-2.75-1.68-2.75-1.69 0-1.95 1.33-1.95 2.66V20H9z"
+                stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round" />
+            </svg></a>
+          <a class="social" href="https://github.com/sasidhar-sys" target="_blank" title="GitHub" rel="noopener"><svg
+              width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="M12 .5a12 12 0 0 0-3.8 23.4c.6.1.8-.25.8-.56v-2.02c-3.34.72-4.04-1.6-4.04-1.6-.54-1.38-1.33-1.75-1.33-1.75-1.08-.74.08-.72.08-.72 1.2.08 1.83 1.24 1.83 1.24 1.06 1.82 2.78 1.3 3.46.99.1-.77.42-1.3.76-1.6-2.66-.3-5.47-1.34-5.47-5.96 0-1.32.47-2.4 1.24-3.25-.13-.3-.54-1.54.12-3.2 0 0 1.01-.32 3.3 1.24a11.4 11.4 0 0 1 6 0c2.29-1.56 3.3-1.24 3.3-1.24.66 1.66.25 2.9.12 3.2.77.85 1.24 1.93 1.24 3.25 0 4.63-2.82 5.66-5.5 5.96.43.38.8 1.12.8 2.26v3.34c0 .31.2.67.8.56A12 12 0 0 0 12 .5z"
+                stroke="currentColor" stroke-width="0.2" />
+            </svg></a>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true">Copied</div>
+
+  <script>
+    // ---------- particles (lightweight) ----------
+    (function () {
+      const canvas = document.getElementById('bgParticles');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let W = canvas.width = innerWidth;
+      let H = canvas.height = innerHeight;
+      window.addEventListener('resize', () => { W = canvas.width = innerWidth; H = canvas.height = innerHeight; });
+
+      const N = Math.max(35, Math.floor(innerWidth / 30));
+      const pts = [];
+      for (let i = 0; i < N; i++) {
+        pts.push({ x: Math.random() * W, y: Math.random() * H, vx: (Math.random() - 0.5) * 0.25, vy: (Math.random() - 0.5) * 0.25, r: 1 + Math.random() * 2 });
+      }
+
+      function draw() {
+        ctx.clearRect(0, 0, W, H);
+        for (let i = 0; i < pts.length; i++) {
+          const p = pts[i];
+          p.x += p.vx; p.y += p.vy;
+          if (p.x < 0 || p.x > W) p.vx *= -1;
+          if (p.y < 0 || p.y > H) p.vy *= -1;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(255,204,0,0.06)';
+          ctx.fill();
+        }
+        requestAnimationFrame(draw);
+      }
+      // respect reduced motion
+      if (!window.matchMedia || !window.matchMedia('(prefers-reduced-motion: reduce)').matches) draw();
+    })();
+
+    // ---------- floating keywords initial random offsets (already in markup) ----------
+    // they animate via CSS
+
+    // ---------- entrance + stagger reveals ----------
+    document.addEventListener('DOMContentLoaded', () => {
+      const card = document.getElementById('contactCard');
+      const leftParas = Array.from(card.querySelectorAll('.left p'));
+      const leftCol = document.getElementById('leftCol');
+      const back = document.getElementById('backHome');
+      const profileThumb = document.getElementById('profileThumb');
+
+      // show container
+      requestAnimationFrame(() => {
+        card.classList.add('show');
+        // reveal left paragraphs staggered
+        const paras = leftCol.querySelectorAll('p');
+        paras.forEach((p, i) => setTimeout(() => p.classList.add('visible'), 140 + i * 120));
+        setTimeout(() => back.classList.add('visible'), 560);
+      });
+
+      // subtle tilt on mouse move (only on non-reduced-motion)
+      if (!window.matchMedia || !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        card.addEventListener('mousemove', (e) => {
+          const r = card.getBoundingClientRect();
+          const cx = r.left + r.width / 2;
+          const cy = r.top + r.height / 2;
+          const dx = (e.clientX - cx) / r.width;
+          const dy = (e.clientY - cy) / r.height;
+          const rx = dy * -6; // rotateX
+          const ry = dx * 8;  // rotateY
+          card.style.transform = `translateY(0) rotateX(${rx}deg) rotateY(${ry}deg) scale(1)`;
+          card.classList.add('tilt');
+        });
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = '';
+          card.classList.remove('tilt');
+        });
+      }
+
+      // profile thumb click opens simple modal-like small preview (reuses existing assets)
+      profileThumb.addEventListener('click', () => {
+        // create full-screen overlay with image (lightweight)
+        const o = document.createElement('div');
+        o.style.position = 'fixed'; o.style.inset = '0'; o.style.zIndex = 99999;
+        o.style.background = 'rgba(0,0,0,0.86)'; o.style.display = 'grid'; o.style.placeItems = 'center';
+        o.setAttribute('role', 'dialog'); o.setAttribute('aria-modal', 'true');
+        const img = document.createElement('img'); img.src = 'profile3.jpg'; img.alt = 'Sasidhar';
+        img.style.maxWidth = '92%'; img.style.maxHeight = '86%'; img.style.borderRadius = '10px'; img.style.boxShadow = '0 30px 90px rgba(0,0,0,0.7)';
+        o.appendChild(img);
+        const close = () => { o.style.opacity = '0'; setTimeout(() => o.remove(), 220); };
+        o.addEventListener('click', (ev) => { if (ev.target === o) close(); });
+        document.body.appendChild(o);
+        setTimeout(() => o.style.opacity = '1', 10);
+        // ESC to close
+        const esc = (ev) => { if (ev.key === 'Escape') { close(); window.removeEventListener('keydown', esc); } };
+        window.addEventListener('keydown', esc);
+      });
+    });
+
+    // ---------- copy to clipboard with toast ----------
+    (function () {
+      const toast = document.getElementById('toast');
+      function showToast(msg) {
+        toast.textContent = msg;
+        toast.classList.add('show');
+        clearTimeout(toast._t);
+        toast._t = setTimeout(() => toast.classList.remove('show'), 1600);
+      }
+
+      function copyText(text) {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          return navigator.clipboard.writeText(text).then(() => true).catch(() => false);
+        } else {
+          // fallback
+          const ta = document.createElement('textarea');
+          ta.value = text; ta.style.position = 'fixed'; ta.style.left = '-9999px';
+          document.body.appendChild(ta); ta.select();
+          try { document.execCommand('copy'); document.body.removeChild(ta); return Promise.resolve(true); } catch (e) { document.body.removeChild(ta); return Promise.resolve(false); }
+        }
+      }
+
+      const emailBtn = document.getElementById('copyEmail');
+      const phoneBtn = document.getElementById('copyPhone');
+      const email = 'mailtosasi.official@gmail.com';
+      const phone = '+91-9677119933';
+
+      if (emailBtn) {
+        emailBtn.addEventListener('click', () => {
+          copyText(email).then(ok => showToast(ok ? 'Email copied' : 'Could not copy'));
+        });
+      }
+      if (phoneBtn) {
+        phoneBtn.addEventListener('click', () => {
+          copyText(phone).then(ok => showToast(ok ? 'Phone copied' : 'Could not copy'));
+        });
+      }
+    })();
+
+    // ---------- accessibility: respects reduced motion already by media query ----------
+  </script>
+  <link rel="stylesheet" href="chatbot.css">
+  <script src="chatbot.js"></script>
+</body>
+
+</html>
